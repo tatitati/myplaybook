@@ -1,0 +1,5 @@
+- name: Configure web server with nginx and php-fpm
+  hosts: my-project-web-server
+  sudo: True
+  roles:
+    - role: nginx

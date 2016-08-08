@@ -1,0 +1,23 @@
+- name: copy nginx config file and restart nginx
+  copy: >
+    src={{ role_path }}/files/nginx.my-project.conf
+    dest=/etc/nginx/conf.d/nginx.my-project.conf
+    owner=root
+    group=root
+    mode=0644
+  notify: restart nginx
+
+- name: copy php-fpm config file and restart frpm to create .sock file
+  copy: >
+    src=fpm.my-project.conf
+    dest=/etc/php5/fpm/pool.d/fpm.my-project.conf
+    owner=root
+    group=root
+    mode=0644
+  notify: restart php-fpm
+
+- name: start nginx service
+  service: name=nginx state=started
+
+- name: start php5-fpm service
+  service: name=php5-fpm state=started
