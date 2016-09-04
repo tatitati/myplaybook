@@ -1,0 +1,35 @@
+- name: create db user
+  postgresql_user:
+    name: "mydbuser"
+    password: "mydbpassword"
+  sudo: True
+  sudo_user: postgres
+
+- name: create database
+  postgresql_db:
+    name: "mydatabase"
+    owner: "mydbuser"
+    encoding: UTF8
+    template: template0
+  sudo: True
+  sudo_user: postgres
+
+- name: copy postgresql  configuration file
+  copy: >
+    src=postgresql.conf
+    dest=/etc/postgresql/9.1/main/postgresql.conf
+    owner=postgres
+    group=postgres
+    mode=0640
+  sudo: True
+  notify: restart postgres
+
+- name: copy client authentication configuration file
+  copy: >
+    src=pg_hba.conf
+    dest=/etc/postgresql/9.1/main/pg_hba.conf
+    owner=postgres
+    group=postgres
+    mode=0640
+  sudo: True
+  notify: restart postgres

@@ -1,0 +1,8 @@
+- name: install basic packages that db-server (postgres) must have to work
+  apt: pkg={{item}} update_cache=yes cache_valid_time=64000
+  sudo: True
+  with_items:
+    - postgresql
+    - python-psycopg2
+
+- include: postgres.yml

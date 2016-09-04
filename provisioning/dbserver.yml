@@ -1,0 +1,5 @@
+- name: Configure web server with nginx and php-fpm
+  hosts: vagrant-db-server
+  sudo: True
+  roles:
+    - role: postgres
